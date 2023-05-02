@@ -4,3 +4,5 @@ Feature: Product search results page
     Given Open search results page
     When Select sort by price, high to low
     Then Verify filter applied (fist product price should be > last product price)
+
+
