@@ -12,16 +12,22 @@ def browser_init(context, test_name):
     :param test_name: scenario.name
     """
 
-    ##### FIREFOX ###########
-    options = FirefoxOptions()
-    options.binary_location = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    options.headless = True
-    context.driver = webdriver.Firefox(executable_path="geckodriver.exe", options=options)
-    #########################
+    # Mobile-Web Emulator
+    mobile_emulation = {"deviceName": "iPhone 12 Pro"}
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    context.driver = webdriver.Chrome(options=chrome_options)
+
+    # ##### FIREFOX ###########
+    # options = FirefoxOptions()
+    # options.binary_location = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+    # options.headless = True
+    # context.driver = webdriver.Firefox(executable_path="geckodriver.exe", options=options)
+    # #########################
 
 
-    #service = Service('/Users/keesh/cureskin-selenium-automation/chromedriver.exe')
-    #context.driver = webdriver.Chrome(service=service)
+    # service = Service('/Users/keesh/cureskin-selenium-automation/chromedriver.exe')
+    # context.driver = webdriver.Chrome(service=service)
     #context.browser = webdriver.Safari()
     #context.browser = webdriver.Firefox()
     #context.driver = webdriver.Firefox(service=service)
@@ -93,8 +99,8 @@ def before_step(context, step):
 
 def after_step(context, step):
     if step.status == 'failed':
-        logger.error(f'Step failed: {step}')
-        # print('\nStep failed: ', step)
+        #logger.error(f'Step failed: {step}')
+        print('\nStep failed: ', step)
         # Mark test case as FAILED on BrowserStack:
         # context.driver.execute_script(
         #     'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Step failed"}}')
